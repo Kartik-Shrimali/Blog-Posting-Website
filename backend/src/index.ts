@@ -12,6 +12,38 @@ const app = new Hono<{
   }
 }>()
 
+//middleware
+
+app.use('/api/v1/blog/*' , async (c , next)=>{
+  const header = c.req.header("Authorization");
+
+  if(!header){
+    return c.json({
+      msg : "header is not present"
+    })
+  }
+
+  const token = header.split(" ")[1];
+
+  if(!token){
+    c.status(401)
+    return c.json({
+      msg : "Token is not sent",
+    })
+  }
+
+  const verified_token = await verify(token , c.env.JWT_SECRET);
+
+  if(!verified_token){
+    c.status(403);
+    return c.json({
+      msg : "Unauthorized access"
+    })
+  }
+
+  await next()
+})
+
 app.post('/api/v1/signup' , async (c) => {
   
   const prisma = new PrismaClient({
