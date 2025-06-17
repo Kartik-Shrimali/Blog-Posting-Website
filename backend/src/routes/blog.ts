@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { PrismaClient } from "@prisma/client/edge"
 import { withAccelerate } from "@prisma/extension-accelerate"
 import { decode, sign, verify } from "hono/jwt"
+import {createBlogInput , updateBlogInput} from "@kartik_shrimali/blog-posting-common"
 
 export const blogRouter = new Hono<{
     Bindings: {
@@ -22,6 +23,13 @@ blogRouter.post('/blog', async (c) => {
         const body = await c.req.json();
         if (!body) {
             return c.text("No data sent")
+        }
+
+        const {success} = createBlogInput.safeParse(body);
+
+        if(!success){
+            c.status(411);
+            return c.text("There was something wrong with the inputs please resend")
         }
 
         const response = await prisma.post.create({
@@ -57,6 +65,13 @@ blogRouter.put('/blog', async (c) => {
     try {
         if (!body) {
             return c.text("No data was sent");
+        }
+
+        const {success} = updateBlogInput.safeParse(body);
+
+        if(!success){
+            c.status(411);
+            return c.text("There was something wrong with the inputs please resend")
         }
 
         const response = prisma.post.update({

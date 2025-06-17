@@ -9,7 +9,9 @@
    "vars": {
      "DATABASE_URL":"prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiMDFKWFlXRFJHTlY2R0o1MjFIM0tFREg1WDEiLCJ0ZW5hbnRfaWQiOiI3MjA2MGE5ZTI0NTcyYzdkY2QyODFhMTNlOTEyOWZlODIzMTVlZGNkYzNiZjUzYWFhNjBkMzZkYWRhZTY4ZDU0IiwiaW50ZXJuYWxfc2VjcmV0IjoiMzUwZWYxNzMtZGQ1NC00YzFjLWJkMGQtM2ZkNzk1YTkwMTYyIn0.tuSJwnFzKzrxEC4RYx3RlB18guHqFeWFr8C8aEckJ0s",
 
-     "JWT_SECRET" : "Kartik@19111"
+     "JWT_SECRET" : "Kartik@19111",
+
+     "CLOUDFLARE_API_TOKEN" : "D937cwHhu_HDTTTbrRm_vGTn8EQqzxG_slZRIFWB"
    }
   // "kv_namespaces": [
   //   {
