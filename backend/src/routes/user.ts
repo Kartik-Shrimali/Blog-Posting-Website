@@ -25,7 +25,7 @@ userRouter.post('/signup', async (c) => {
         const { success } = signupInput.safeParse(body)
 
         if (!success) {
-            c.status(411);
+            c.status(400);
             return c.text("Inputs are not correct")
         }
 
@@ -50,7 +50,7 @@ userRouter.post('/signup', async (c) => {
 
     } catch (e) {
         console.log(e)
-        c.status(411)
+        c.status(500)
         return c.text("internal server error")
     }
 })
@@ -67,7 +67,7 @@ userRouter.post('/signin', async (c) => {
         const {success} = signinInput.safeParse(body)
 
         if(!success){
-            c.status(411)
+            c.status(400)
             return c.text("Inputs are not correct")
         }
 
@@ -97,7 +97,7 @@ userRouter.post('/signin', async (c) => {
         })
     } catch (e) {
         console.log(e)
-        c.status(411);
+        c.status(500);
         return c.text("internal server error ")
     }
 
