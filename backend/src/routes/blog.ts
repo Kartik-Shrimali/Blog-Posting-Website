@@ -141,13 +141,22 @@ blogRouter.get('/blog/:id', async (c) => {
         const blog = await prisma.post.findFirst({
             where: {
                 id: id
+            },
+            select : {
+                content : true,
+                title : true,
+                id : true,
+                author : {
+                    select : {
+                        name : true
+                    }
+                }
             }
         })
 
         if (!blog) {
             return c.text("no blog found")
         }
-
         return c.json({
             message: "Post found successfully",
             blog

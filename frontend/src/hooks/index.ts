@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { BACKEND_URL } from "../config"
 
-interface Blog {
+ export interface Blog {
     authorname: string,
     title: string,
     content: string,
@@ -12,6 +12,36 @@ interface Blog {
     },
     id : string
 }
+
+export const useBlog = ({id} : {id : string}) => {
+    const [loading, setLoading] = useState(true);
+    const [blog, setBlog] = useState<Blog>();
+
+    useEffect(() => {
+        const fetchBlogs = async () => {
+            try {
+                const token = localStorage.getItem("token")
+                let response = await axios.get(`${BACKEND_URL}/api/v1/blog/blog/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+
+                setBlog(response.data.blog);
+                setLoading(false);
+            } catch (e) {
+                console.log("there was some error in fetching blogs", e);
+            }
+        };
+        fetchBlogs();
+    }, []);
+
+    return {
+        loading, blog
+    }
+}
+
+
 
 export const useBlogs = () => {
     const [loading, setLoading] = useState(true);
@@ -35,7 +65,6 @@ export const useBlogs = () => {
         };
         fetchBlogs();
     }, []);
-
 
     return {
         loading, blogs
